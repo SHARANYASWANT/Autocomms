@@ -99,6 +99,7 @@ const AuthController = {
         // Set cookies for sessionID and csrfToken
         res.cookie('sessionID', sessionID, { httpOnly: true, maxAge: 30 * 60 * 1000 }); // 30 minutes
         res.cookie('csrfToken', csrfToken, { maxAge: 30 * 60 * 1000 });
+        res.cookie("userId", user.user_id);
   
         res.status(200).json({ message: 'Signin successful' });
       } catch (error) {
@@ -114,6 +115,7 @@ const AuthController = {
           await deleteSession(sessionID);
           res.clearCookie('sessionID');
           res.clearCookie('csrfToken');
+          res.clearCookie('userId');
         }
         res.status(200).json({ message: 'Signout successful' });
       } catch (error) {
